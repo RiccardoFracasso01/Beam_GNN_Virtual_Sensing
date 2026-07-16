@@ -1,12 +1,13 @@
 # GNN-based Virtual Sensing on Beams
 
-This repository is dedicated to a graph-based virtual sensing (VS) approach on beam structures, wherein the strucutral response is predicted at unmeasured nodes from a handful of sensed locations. We simulate structures as cantilever beams with randomized geometry, material and loading conditions using [OpenSeesPy](https://openseespydoc.readthedocs.io/), and a GNN + LSTM model is trained to reconstruct the full-field response from a sparse sensor layout. The framework also benchmarks the learned models against Modal Decomposition and Expansion (MDE). This code is associated with the following paper:
+This repository is dedicated to a graph-based virtual sensing (VS) approach on beam structures, wherein the strucutral response is predicted at unmeasured nodes from a handful of sensed locations. We simulate structures as cantilever beams with randomized geometry, material and loading conditions using [OpenSeesPy](https://openseespydoc.readthedocs.io/), and a GNN + LSTM model is trained to reconstruct the full-field response from a sparse sensor layout. The framework also benchmarks the learned models against Modal Decomposition and Expansion (MDE). This code is source for the following paper:
 - "Towards Generalisable Virtual Sensing: A Physics-Informed Graph Neural Network Approach On Cantilever Beams", submitted to the special collection 'Focus on Machine Learning for Structural and Infrastructure Systems' of Machine Learning: Engineering.
 
 ## Methodology overview
 
-[vsFramework.pdf](https://github.com/user-attachments/files/30092508/vsFramework.pdf)
+Here you can see an overview of the proposed GNN-LSTM virtual sensing framework. Acceleration measurements from a sparse set of physical sensors (green) are fused with static geometric and topological node encodings and propagated over the graph. The resulting spatial latent sequences are processed by an LSTM and mapped by a linear readout to the full field acceleration response. The model is trained on a population of synthetic  cantilever beams simulated in OpenSeesPy under randomised excitation.
 
+<img width="982" height="725" alt="vsFramework-1" src="https://github.com/user-attachments/assets/34f89448-a55e-47a2-b9f9-2fa565c49233" />
 
 ## Project structure
 ```
