@@ -1,0 +1,39 @@
+# example of configuration for virtual sensing
+run:
+  out_dir: "artifacts/example"         # where model.pt, scalers, loss curve, results are saved
+
+data:
+  direction: 'z'                          # 'z' or 'y'
+  channel: 'acc'                          # 'acc', 'vel', or 'disp' — signal used as the sensed/target quantity
+  selected_nodes: [9,29]                  # node indices (0-based) used as known input sensors; all other nodes are virtual-sensing targets
+  graph_dir: "graphs"                     # directory with the .pt graph files built by make_graphs.py
+  train_file: ["example_data.pkl", "example.pt"]  # [source sim data pkl, output/input graph .pt]
+  test_file:  ["example_data.pkl", "example.pt"]          # same convention as train_file, for the test set
+  test_size: 0.2                          # fraction held out for testing, only used if train_file[1] == test_file[1]
+  noise_level: 0                          # Gaussian noise added to sensed signal, as a fraction of each signal's peak amplitude
+
+dataloader:
+  batch_size: 10                         # number of graphs per training batch
+
+scaling:
+  scaler_path: "scalers.pkl"              # filename (under run.out_dir) for the fitted StandardScalers
+
+model:
+  arch: "GNN_LSTM"                        # model class name 
+  mp_type: "GAT"                          # message-passing layer: "GAT", "GINE", or "GEN"
+  hidden_gnn: 128                         # hidden channel width of each GNN layer
+  hidden_lstm: 256                        # hidden size of the LSTM
+  n_layers_gnn: 2                         # number of stacked GNN layers
+  n_layers_lstm: 2                        # number of LSTM layers
+  num_heads: 4                            # attention heads, only used when mp_type is "GAT"
+  dropout: 0.000854                       # dropout probability (GNN layers + inter-layer LSTM dropout)
+
+train:
+  epochs: 200                             # number of training epochs 
+  lr:  0.0006                             # Adam initial learning rate
+  weight_decay: 2.67e-06                  # Adam regularization coefficient
+  eta_min: 1.27e-07                       # CosineAnnealingLR final learning rate
+
+phys_loss:                                # only used with --type phys
+  dt: 0.002                               # timestep of the signals
+  highpass_hz: 2.0                        # high-pass cutoff [Hz] for the FFT integration in utils.integrate

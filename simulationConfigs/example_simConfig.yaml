@@ -1,0 +1,62 @@
+# example of configuration for OpenSeespy simulations
+
+simulation:
+  dt: 0.0005             # time step [s]
+  tEnd: 10               # total simulation duration [s]
+  num_nodes: 30          # number of FE nodes along the beam
+  decimation: 4          # downsampling factor applied to saved signals
+  seconds_to_keep: 5     # seconds kept from the end of each signal (steady-state only)
+
+sampling:
+  samples: 64            # number of beam instances to generate (Sobol samples)
+
+# sobol sampling
+# for each parameter, ranges is a list of [min, max]:
+# same extremes (min == max) -> constant value;
+# different extremes -> sampled from that range
+# multiple ranges can be prescribed (see L)
+population_param:
+  E:                      # Young's modulus [Pa]
+    ranges:
+      - [2.1e11, 2.1e11]   
+  rho:                    # mass density [kg/m^3]
+    ranges:
+      - [7860, 7860]
+  L:                      # beam length [m]
+    ranges:
+      - [0.5,0.7]
+      - [1.2,1.5]
+  b0:                     # base width, as a fraction of L
+    ranges:
+      - [0.03, 0.03]
+  h0:                     # base height, as a fraction of L
+    ranges:
+      - [0.01, 0.01]
+  zeta:                   # modal damping ratio
+    ranges:
+      - [0.008, 0.008]
+  force_amplitude:        # excitation force amplitude [N]
+    ranges:
+      - [100,100]
+
+  m_tip:                  # tip point mass [kg]
+    ranges:
+      - [1.5, 1.5]
+taper:
+  isTapered: False        # whether the beam cross-section tapers along its length
+  db: 0.1                 # fractional width reduction from taper start to tip
+  dh: 0.1                 # fractional height reduction from taper start to tip
+  l_start: 0.1            # position along the beam [m] from the clamped end where tapering starts
+
+load:
+  load_type: 'white_noise'  # 'sine' or 'white_noise' or 'colored_noise'
+  force_dir: 'z'            # 'z' or 'y'
+  order: 4                  # Butterworth filter order (white_noise only)
+  frequency: [100]          # sine: single harmonic [f1], multiple harmonics summed [f1,f2], summed together; white_noise: cutoff frequency
+  zeta : [0.08]             # colored_noise only: damping ratio per resonance, paired with frequency
+  n_exc_points: [1]         # number of simultaneous excitation points
+  target_nodes: [[30,30]]   # excitation node(s): fixed position [n,n], a single range [low,high], or multiple ranges [[low1,high1],[low2,high2],...]
+  duration: 10              # excitation signal duration [s]
+
+output:
+  dataset_name: "example"   # output filename stem
