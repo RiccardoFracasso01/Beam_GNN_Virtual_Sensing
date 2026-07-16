@@ -1,6 +1,12 @@
-# GNN based Virtual Sensing on beams
+# GNN-based Virtual Sensing on Beams
 
-This repository is dedicated to graph-based virtual sensing (VS) on beam structures: predicting the  response at unmeasured nodes of a structure from a handful of physical sensors. Structures are simulated as cantilever beams with randomized geometry, material and loading conditions using [OpenSeesPy](https://openseespydoc.readthedocs.io/), and a GNN + LSTM model is trained to reconstruct the full-field response from a sparse sensor layout. The framework also benchmarks the learned models against Modal Decomposition and Expansion (MDE).
+This repository is dedicated to a graph-based virtual sensing (VS) approach on beam structures, wherein the strucutral response is predicted at unmeasured nodes from a handful of sensed locations. We simulate structures as cantilever beams with randomized geometry, material and loading conditions using [OpenSeesPy](https://openseespydoc.readthedocs.io/), and a GNN + LSTM model is trained to reconstruct the full-field response from a sparse sensor layout. The framework also benchmarks the learned models against Modal Decomposition and Expansion (MDE). This code is associated with the following paper:
+- "Towards Generalisable Virtual Sensing: A Physics-Informed Graph Neural Network Approach On Cantilever Beams", submitted to the special collection 'Focus on Machine Learning for Structural and Infrastructure Systems' of Machine Learning: Engineering.
+
+## Methodology overview
+
+[vsFramework.pdf](https://github.com/user-attachments/files/30092508/vsFramework.pdf)
+
 
 ## Project structure
 ```
